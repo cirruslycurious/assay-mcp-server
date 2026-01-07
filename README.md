@@ -31,7 +31,21 @@ All tools search both your **private** and **public** document collections, givi
 - An Assay account ([sign up here](https://assay.cirrusly-clever.com))
 - Claude Desktop installed
 
+### Install from npm (Recommended)
+
+The easiest way to install the Assay MCP Server is via npm:
+
+```bash
+npm install -g assay-mcp-server
+```
+
+View the package on npm: [npmjs.com/package/assay-mcp-server](https://www.npmjs.com/package/assay-mcp-server)
+
+**Note:** On some systems, you may need to use `sudo` for global installations. Alternatively, you can use `npx` in your Claude Desktop configuration (see below).
+
 ### Install from Source
+
+For development or if you want the latest features, you can install from source:
 
 ```bash
 git clone https://github.com/cirruslycurious/assay-mcp-server.git
@@ -40,11 +54,7 @@ npm install
 npm run build
 ```
 
-### Global Installation (After Publishing)
-
-```bash
-npm install -g @assay/mcp-server
-```
+View source on GitHub: [github.com/cirruslycurious/assay-mcp-server](https://github.com/cirruslycurious/assay-mcp-server)
 
 ## Quick Start
 
@@ -69,7 +79,44 @@ Add the MCP server to your Claude Desktop configuration:
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`  
 **Linux:** `~/.config/Claude/claude_desktop_config.json`
 
-### For Local Installation
+### Option 1: Using Global npm Install (Recommended)
+
+If you installed via `npm install -g assay-mcp-server`:
+
+```json
+{
+  "mcpServers": {
+    "assay": {
+      "command": "assay-mcp-server",
+      "args": ["--token", "YOUR_FIREBASE_TOKEN_HERE"]
+    }
+  }
+}
+```
+
+### Option 2: Using npx (No Installation Required)
+
+You can use `npx` to run the server without installing it globally:
+
+```json
+{
+  "mcpServers": {
+    "assay": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "assay-mcp-server",
+        "--token",
+        "YOUR_FIREBASE_TOKEN_HERE"
+      ]
+    }
+  }
+}
+```
+
+### Option 3: Using Local Source Installation
+
+If you installed from source, use the absolute path:
 
 ```json
 {
@@ -91,19 +138,6 @@ Add the MCP server to your Claude Desktop configuration:
 - Linux: `/home/yourname/assay-mcp-server/dist/index.js`
 - Windows: `C:\\Users\\yourname\\Documents\\assay-mcp-server\\dist\\index.js`
 
-### For Global Installation
-
-```json
-{
-  "mcpServers": {
-    "assay": {
-      "command": "assay-mcp-server",
-      "args": ["--token", "YOUR_FIREBASE_TOKEN_HERE"]
-    }
-  }
-}
-```
-
 ### Using Environment Variable
 
 ```json
@@ -121,8 +155,11 @@ Add the MCP server to your Claude Desktop configuration:
 ```
 
 **Optional Environment Variables:**
+- `FIREBASE_API_KEY` - Override Firebase Web API key (default: Assay service key)
+  - Only needed if you want to use your own Firebase project
+  - Get from: Firebase Console > Project Settings > General > Your apps
 - `ASSAY_FUNCTIONS_BASE_URL` - Override Cloud Functions endpoint (default: `https://us-east4-pdfsummaries.cloudfunctions.net`)
-- `FIREBASE_API_KEY` - Override Firebase Web API key for token verification (default: configured for Assay service)
+- `CLAUDE_API_KEY` - For optional server-side synthesis
 
 **⚠️ Optional: Server-Side Synthesis**
 
